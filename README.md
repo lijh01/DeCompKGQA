@@ -8,7 +8,7 @@ DeCompKGQA is a two-stage framework that leverages sub-question decomposition an
 
 ## Running the code
 
-To run the code, you need to train from MultiTQ to get a multitq.ckpt and place it in the models folder first.
+Unzip the data and get models first.
 
 ```bash
 # cd MultiTQ
