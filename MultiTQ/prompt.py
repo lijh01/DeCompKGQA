@@ -11,6 +11,56 @@ action_templates = [
     
 ]
 
+SUMMARY_INSTRUCTION =  '''Carefully analyze the following correct and incorrect examples. From these, extract and summarize the corresponding patterns and principles. Based on these examples, provide a comprehensive methodology that describes how to correctly tackle this type of problem, highlighting the key steps and common pitfalls to avoid.
+
+Task Defination:
+Please use the tool provided below to interact with the knowledge graph. You will find a list of actions categorized into time-based queries, entity queries, and specific time queries. There may be more than one answer to the question, but you only need to answer one correct answer that satisfies the question.
+Time-based Queries:
+Retrieve the time of a specific event based on the head/subject entity, relation and tail/object entity by using the $get_time(HEAD, RELATION, TAIL)$ function, .
+Identify entities/events that occurred before a given time by using the $get_before(ENTITY_LIST, SPECIFIED_TIME)$ function.
+Identify entities/events that occurred after a given time by using the $get_after(ENTITY_LIST, SPECIFIED_TIME)$ function.
+Identify entities/events that occurred between two specific times by using the $get_between(ENTITY_LIST, START_TIME, END_TIME)$ function.
+Entity Queries:
+Identify the tail/object entity based on the head/subject entity and relation by using the $get_tail_entity(CURRENT_HEAD, RELATION, OPTIONAL_TIME_CONSTRAINT)$ function.
+Identify the head/suject entity based on the tail/object entity and relation by using the $get_head_entity(CURRENT_TAIL, RELATION, OPTIONAL_TIME_CONSTRAINT)$ function.
+Specific Time Queries:
+Pinpoint entities with the earliest occurrence by using the $get_first(ENTITY_LIST)$ function.
+Identify entities with the latest occurrence by using the $get_last(ENTITY_LIST)$ function.
+To provide your answer, use the $answer(YOUR_ANSWER)$ function.
+(end of Task Defination) 
+
+Here is an example output:
+Example 1:
+Overall methodology Instruction: 
+This type of problem involves the sequential determination of events, e.g. Who {Relation R} {entity C} before {entity B}, to find the answer {entity A} we need to reason in three steps, firstly to determine the specific temporal anchors, i.e., the occurrence time t of {entity B, Relation, and entity C}, and then to find out which head entities have generated a Relation R connection with {entity C}. Then, we find out which head entities and {entity C} have been associated with Relation R, and finally filter out the answers that satisfy the time requirement before t. The specific steps are as follows. The steps are as follows
+
+Step-by-step Guide:
+1. Firstly, use get_time to find the time, $get_time(entity B, Relation R, entity C)$, to get the quaternion {entity B, Relation R, entity C, Time t};
+2. use the get_head_entity method to get the head entity, $get_head_entity(entity C, Relation R, entity C)$, to be able to get a list of quaternions;
+3. use the get_before method to filter the entities that satisfy the constraints, $get_before({entities},t)$, to be able to obtain a list of entities that satisfy the conditions
+4. complete the reasoning process by answering the found answer $answer(entity A)$
+
+(end of example output)
+
+
+Here is the correct samples and incorrect samples for the current question type:
+Correct samples: 
+{correct_examples}
+
+Incorrect samples:
+{incorrect_examples}
+(end of samples)
+
+Now start writing. Please design a methodology that describes how to correctly tackle this type of problem. The goal is to provide a comprehensive guide that highlights the key steps and common pitfalls to avoid when approaching this type of problem.organize your output by strictly following the output format as below:
+
+Overall Instruction: 
+<Define this methodology in detail.  Provide a concise guide or inference. Note that the guidance you provide should be at a methodological level, for this type of question, not for a specific one. >
+
+Step-by-step Guide:
+<A step-by-step guide or procedure detailing how to approach and solve this kind of question. Note that the steps proposed should be specific and relevant to this type of question, tell which type of action should use in each step and the reason>
+
+'''
+
 DECISION_INSTRUCTION_PHASE_1_entities = '''
 You are an expert query decomposer. Strictly follow these rules:
 
